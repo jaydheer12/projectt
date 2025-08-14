@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Automatic Light Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      transition: background-color 0.5s;
+      padding-top: 50px;
+    }
+    .light-status {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+    .bulb {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+      background-color: yellow;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 10px yellow;
+      transition: all 0.5s;
+    }
+    .off {
+      background-color: #555;
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Automatic Light Control</h1>
+  <div id="bulb" class="bulb"></div>
+  <div id="status" class="light-status">Checking time...</div>
+
+  <script>
+    function updateLightStatus() {
+      const hour = new Date().getHours(); // Get current hour (0-23)
+      const bulb = document.getElementById('bulb');
+      const status = document.getElementById('status');
+
+      // Define light ON between 6AM and 6PM
+      if (hour >= 6 && hour < 18) {
+        bulb.classList.remove('off');
+        document.body.style.backgroundColor = '#fffbe6'; // Light background
+        status.textContent = "Light is ON (Daytime)";
+      } else {
+        bulb.classList.add('off');
+        document.body.style.backgroundColor = '#1a1a1a'; // Dark background
+        status.textContent = "Light is OFF (Nighttime)";
+      }
+    }
+
+    // Run on page load
+    updateLightStatus();
+
+    // Optional: Update every minute to reflect time change
+    setInterval(updateLightStatus, 60000);
+  </script>
+
+</body>
+</html>
